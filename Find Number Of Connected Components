@@ -1,0 +1,57 @@
+/*Find Number Of Connected Components
+Input-
+0 1
+1 2
+2 3
+3 0
+4 5
+4 6
+5 7
+8 9
+8 10
+Output-
+3
+*/
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long int
+
+void dfs(ll node,bool *vis,vector<ll> adj_lst[]){
+    vis[node]=true;
+
+    for(auto it: adj_lst[node]){
+        if(!vis[it]){
+            dfs(it,vis,adj_lst);
+        }
+    }
+}
+ 
+int main(){
+   ios_base::sync_with_stdio(false);
+   cin.tie(NULL);cout.tie(NULL);
+ 
+   #ifndef ONLINE_JUDGE
+   freopen("input.txt", "r", stdin);
+   freopen("output.txt", "w", stdout);
+   #endif
+ 
+   ll n,m;
+   cin>>n>>m;
+   vector<ll> adj_lst[n];
+   ll u,v;
+   for(ll i=0;i<m;i++){
+       cin>>u>>v;
+       adj_lst[u].push_back(v);
+       adj_lst[v].push_back(u);
+   } 
+   bool vis[n+1]={false};
+   ll count=0;
+   for(ll i=0;i<m;i++){
+       if(!vis[i]){
+           count++;
+           dfs(i,vis,adj_lst);
+       }
+   }
+   cout<<count<<endl;
+return 0;   
+}
